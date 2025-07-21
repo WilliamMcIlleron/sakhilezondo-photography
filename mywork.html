@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-all duration-500">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Sakhile Zondo Photography</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+        darkMode: 'class'
+    }
+  </script>
+  <script>
+    // Theme management
+    let theme = 'light';
+    
+    function setTheme(newTheme) {
+      theme = newTheme;
+      const root = document.documentElement;
+      if (newTheme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+      localStorage.setItem('theme', newTheme);
+    }
+
+    function toggleDarkMode() {
+      setTheme(theme === 'dark' ? 'light' : 'dark');
+      updateThemeButton();
+    }
+
+    window.addEventListener('load', () => {
+    // Load theme from localStorage if set
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      setTheme(savedTheme);
+    } else {
+      // Optional: detect system preference if no saved theme
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    function updateThemeButton() {
+      const button = document.getElementById('themeToggle');
+      if (button) {
+        button.innerHTML = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      }
+    }
+    updateThemeButton();
+    animateOnScroll();
+  });
+
+    // Modal functionality
+    let currentImageIndex = 0;
+    let currentCategory = 'all';
+    let allImages = [];
+
+    function openLightbox(imageSrc, imageAlt, category, index) {
+      currentImageIndex = index;
+      currentCategory = category;
+      
+      const modal = document.getElementById('lightbox');
+      const modalImg = document.getElementById('lightboxImage');
+      const modalTitle = document.getElementById('lightboxTitle');
+      
+      modalImg.src = imageSrc;
+      modalImg.alt = imageAlt;
+      modalTitle.textContent = imageAlt;
+      
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      
+      // Update navigation buttons
+      updateNavButtons();
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = 'auto';
+    }
+
+    function updateNavButtons() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const currentImages = getCurrentCategoryImages();
+      
+      prevBtn.style.opacity = currentImageIndex > 0 ? '1' : '0.5';
+      nextBtn.style.opacity = currentImageIndex < currentImages.length - 1 ? '1' : '0.5';
+    }
+
+    function getCurrentCategoryImages() {
+      if (currentCategory === 'all') {
+        return document.querySelectorAll('.gallery-item img');
+      }
+      return document.querySelectorAll(`.gallery-item[data-category="${currentCategory}"] img`);
+    }
+
+    function navigateImage(direction) {
+      const currentImages = getCurrentCategoryImages();
+      const newIndex = currentImageIndex + direction;
+      
+      if (newIndex >= 0 && newIndex < currentImages.length) {
+        currentImageIndex = newIndex;
+        const newImg = currentImages[currentImageIndex];
+        openLightbox(newImg.src, newImg.alt, currentCategory, currentImageIndex);
+      }
+    }
+
+    function filterGallery(category) {
+      currentCategory = category;
+      const items = document.querySelectorAll('.gallery-item');
+      const buttons = document.querySelectorAll('.filter-btn');
+      
+      // Update button styles
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-blue-500', 'text-white');
+        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      });
+      
+      const activeBtn = document.querySelector(`[onclick="filterGallery('${category}')"]`);
+      activeBtn.classList.add('bg-blue-500', 'text-white');
+      activeBtn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      
+      // Filter items
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+          item.classList.remove('hidden');
+        } else {
+          item.style.display = 'none';
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    // Initialize on page load
+    window.addEventListener('load', () => {
+      updateThemeButton();
+      
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigateImage(-1);
+        if (e.key === 'ArrowRight') navigateImage(1);
+      });
+    });
+  </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900 text-gray-800 dark:text-gray-100 min-h-screen transition-all duration-500">
+
+  <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-xl border-b border-purple-200 dark:border-purple-700 sticky top-0 z-40">
+    <div class="flex justify-between items-center max-w-6xl mx-auto p-6">
+      <div class="flex items-center space-x-4">
+        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl">📸</div>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          Portfolio
+        </h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="./index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors">
+          Back to Home
+        </a>
+        <button 
+          id="themeToggle"
+          onclick="toggleDarkMode()" 
+          class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition-all duration-300 font-medium">
+          🌙 Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-4xl mx-auto p-6 mt-8">
+    <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200 dark:border-purple-700 text-center">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        My Work
+      </h2>
+      <div class="w-16 h-1 bg-blue-500 mx-auto rounded-full mb-6"></div>
+      <p class="text-gray-700 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+        Explore my photography journey through these captured moments. Each image tells a unique story, 
+        from intimate portraits to grand celebrations.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Buttons -->
+  <section class="max-w-6xl mx-auto p-6 mt-8">
+    <div class="flex justify-center space-x-4 flex-wrap gap-2">
+      <button onclick="filterGallery('all')" class="filter-btn bg-blue-500 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+        All Work
+      </button>
+      <button onclick="filterGallery('portraits')" class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+        Portraits
+      </button>
+      <button onclick="filterGallery('weddings')" class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+        Sports
+      </button>
+      <button onclick="filterGallery('events')" class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+        Events
+      </button>
+      <button onclick="filterGallery('lifestyle')" class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
+        Lifestyle
+      </button>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="max-w-6xl mx-auto p-6">
+    <div class="flex justify-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl justify-items-center">
+        
+        <!-- Portrait Images -->
+        <div class="gallery-item bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer" data-category="portraits">
+          <div class="aspect-square bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center text-6xl" onclick="openLightbox(this.querySelector('div').style.backgroundImage, 'Professional Portrait Session', 'portraits', 0)">
+            <img src="./images/IMG_0843.JPG" alt="SJC Rugby" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200">St John's 1st XV</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">A photograph of the St John's College first rugby team.</p>
+          </div>
+        </div>
+  
+        <div class="gallery-item bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer" data-category="portraits">
+          <div class="aspect-square bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center text-6xl" onclick="openLightbox(this.querySelector('div').style.backgroundImage, 'Professional Portrait Session', 'portraits', 0)">
+            <img src="./images/IMG_9999.JPG" alt="Basketball action shot" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200">Basketball Action Shot</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">A photograph of a game changing moment.</p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Call to Action -->
+  <section class="max-w-4xl mx-auto p-6 mt-12 mb-8">
+    <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200 dark:border-purple-700 text-center">
+      <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Ready to Create Something Beautiful?
+      </h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-6">
+        Let's capture your special moments together. Book your session today!
+      </p>
+      <a href="#" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium shadow transition-all duration-300 transform hover:scale-105">
+        Book Your Session
+      </a>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full">
+      <!-- Close button -->
+      <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center">
+        ×
+      </button>
+      
+      <!-- Navigation buttons -->
+      <button id="prevBtn" onclick="navigateImage(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center">
+        ←
+      </button>
+      
+      <button id="nextBtn" onclick="navigateImage(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center">
+        →
+      </button>
+      
+      <!-- Image -->
+      <img id="lightboxImage" class="w-full h-auto max-h-screen object-contain rounded-lg" />
+      
+      <!-- Title -->
+      <div class="absolute bottom-4 left-4 right-4 text-center">
+        <h4 id="lightboxTitle" class="text-white text-xl font-medium bg-black bg-opacity-50 px-4 py-2 rounded-lg"></h4>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-12 p-8">
+    <div class="max-w-md mx-auto">
+      <div class="bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm rounded-full p-6 border border-purple-200 dark:border-purple-700">
+        <p class="text-gray-600 dark:text-gray-400 text-sm">
+          © 2025 Sakhile Zondo Photography<br>
+          <span class="text-xs">Making memories, one click at a time 📸</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
