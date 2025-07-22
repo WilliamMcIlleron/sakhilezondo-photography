@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sakhile Zondo Photography ✨</title>
+  <title>Sakhile Zondo Photography</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -11,316 +11,444 @@
         theme: {
           extend: {
             animation: {
-              'float': 'float 6s ease-in-out infinite',
-              'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
-              'slide-in': 'slide-in 0.8s ease-out',
-              'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
+              'fade-in': 'fade-in 0.8s ease-out',
+              'slide-up': 'slide-up 0.8s ease-out',
+              'image-hover': 'image-hover 0.3s ease-out',
             },
             keyframes: {
-              float: {
-                '0%, 100%': { transform: 'translateY(0px)' },
-                '50%': { transform: 'translateY(-20px)' },
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
               },
-              'pulse-glow': {
-                '0%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' },
-                '100%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.8)' },
-              },
-              'slide-in': {
-                '0%': { transform: 'translateY(50px)', opacity: '0' },
+              'slide-up': {
+                '0%': { transform: 'translateY(30px)', opacity: '0' },
                 '100%': { transform: 'translateY(0)', opacity: '1' },
               },
-              'bounce-gentle': {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-5px)' },
+              'image-hover': {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(1.05)' },
               }
+            },
+            fontFamily: {
+              'display': ['Inter', 'sans-serif'],
+              'body': ['Inter', 'sans-serif'],
             }
           }
         }
     }
   </script>
-<script>
-  // Theme management
-  let theme = 'light';
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    // Theme management - Simplified without localStorage
+    let theme = 'light';
 
-  function setTheme(newTheme) {
-    theme = newTheme;
-    const root = document.documentElement;
-    if (newTheme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
+    function setTheme(newTheme) {
+      theme = newTheme;
+      const root = document.documentElement;
+      if (newTheme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
     }
-    // Save preference
-    localStorage.setItem('theme', newTheme);
-  }
 
-  function toggleDarkMode() {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-    updateThemeButton();
-  }
-
-  function updateThemeButton() {
-    const button = document.getElementById('themeToggle');
-    if (button) {
-      button.innerHTML = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    function toggleDarkMode() {
+      setTheme(theme === 'dark' ? 'light' : 'dark');
+      updateThemeButton();
     }
-  }
 
-  // Initialize on page load
-  window.addEventListener('load', () => {
-    // Load theme from localStorage if set
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      setTheme(savedTheme);
-    } else {
-      // Optional: detect system preference if no saved theme
+    function updateThemeButton() {
+      const button = document.getElementById('themeToggle');
+      if (button) {
+        button.innerHTML = theme === 'dark' ? 
+          '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>' :
+          '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>';
+      }
+    }
+
+    // Smooth scrolling and animations
+    window.addEventListener('load', () => {
+      // Detect system preference
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(prefersDark ? 'dark' : 'light');
-    }
+      updateThemeButton();
+      
+      // Initialize scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
 
-    updateThemeButton();
-    animateOnScroll();
-  });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-slide-up');
+          }
+        });
+      }, observerOptions);
 
-  function animateOnScroll() {
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-slide-in');
-        }
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
       });
     });
 
-    elements.forEach(el => observer.observe(el));
-  }
+    // Form submission animation
+    function handleFormSubmit() {
+      const button = document.querySelector('button[type="submit"]');
+      const form = document.getElementById('bookingForm');
+      
+      button.classList.add('animate-pulse', 'opacity-75');
+      button.innerHTML = 'Sending...';
+      button.disabled = true;
 
-  document.getElementById("bookingForm").addEventListener("submit", function () {
-    const form = document.getElementById("bookingForm");
-    const button = document.querySelector('button[type="submit"]');
-
-    // Animate button
-    button.classList.add("animate-pulse");
-    button.innerHTML = "📸 Submitting...";
-
-    // Reset styles after a delay
-    setTimeout(() => {
-      button.innerHTML = "✅ Request Sent!";
-      button.classList.remove("animate-pulse");
-      button.classList.add("bg-green-600", "hover:bg-green-700");
-      button.classList.remove(
-        "bg-gradient-to-r",
-        "from-purple-500",
-        "to-pink-500",
-        "hover:from-purple-600",
-        "hover:to-pink-600"
-      );
-
+      // Reset after delay
       setTimeout(() => {
-        button.innerHTML = "📸 Submit Booking Request";
-        button.classList.remove("bg-green-600", "hover:bg-green-700");
-        button.classList.add(
-          "bg-gradient-to-r",
-          "from-purple-500",
-          "to-pink-500",
-          "hover:from-purple-600",
-          "hover:to-pink-600"
-        );
+        button.innerHTML = '✓ Message Sent!';
+        button.classList.remove('animate-pulse', 'opacity-75');
+        button.classList.add('bg-green-500', 'hover:bg-green-600');
+        button.classList.remove('bg-black', 'hover:bg-gray-800');
+        
+        setTimeout(() => {
+          button.innerHTML = 'Send Message';
+          button.classList.remove('bg-green-500', 'hover:bg-green-600');
+          button.classList.add('bg-black', 'hover:bg-gray-800');
+          button.disabled = false;
+        }, 3000);
       }, 2000);
-    }, 1500);
-  });
-</script>
+    }
 
+    // Modal functionality for portfolio
+    let currentImageIndex = 0;
+    const portfolioImages = [
+      { src: './images/IMG_0843.JPG', title: 'St John\'s 1st XV', category: 'Sports' },
+      { src: './images/IMG_9999.JPG', title: 'Basketball Action Shot', category: 'Sports' },
+      { src: './images/IMG_0731.JPG', title: 'St John\'s Spirit', category: 'Sports' },
+      { src: './images/IMG_3675.JPG', title: 'Michealhouse 2025 16A', category: 'Sports' }
+    ];
+
+    function openModal(index) {
+      currentImageIndex = index;
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImage');
+      const title = document.getElementById('modalTitle');
+      
+      img.src = portfolioImages[index].src;
+      title.textContent = portfolioImages[index].title;
+      
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = 'auto';
+    }
+
+    function navigateModal(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) currentImageIndex = portfolioImages.length - 1;
+      if (currentImageIndex >= portfolioImages.length) currentImageIndex = 0;
+      
+      const img = document.getElementById('modalImage');
+      const title = document.getElementById('modalTitle');
+      
+      img.src = portfolioImages[currentImageIndex].src;
+      title.textContent = portfolioImages[currentImageIndex].title;
+    }
+
+    // Close modal with escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') navigateModal(-1);
+      if (e.key === 'ArrowRight') navigateModal(1);
+    });
+  </script>
 </head>
-<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900 text-gray-800 dark:text-gray-100 min-h-screen transition-all duration-500">
-  
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-body transition-all duration-500">
 
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-black dark:bg-white rounded-full flex items-center justify-center">
+            <span class="text-white dark:text-black text-sm font-bold">SZ</span>
+          </div>
+          <span class="font-display font-semibold text-lg">ShotsByZondo</span>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Home</a>
+          <a href="#portfolio" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Portfolio</a>
+          <a href="#about" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">About</a>
+          <a href="#contact" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Contact</a>
+          <button 
+            id="themeToggle"
+            onclick="toggleDarkMode()" 
+            class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          </button>
+        </div>
 
-  <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-xl border-b border-purple-200 dark:border-purple-700 sticky top-0 z-50">
-    <div class="flex justify-between items-center max-w-6xl mx-auto p-6">
-      <div class="flex items-center space-x-4">
-        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl">📸</div>
-        <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
-          Shots by Zondo
-        </h1>
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center space-x-2">
+          <button 
+            id="themeToggle"
+            onclick="toggleDarkMode()" 
+            class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          </button>
+        </div>
       </div>
-      <button 
-        id="themeToggle"
-        onclick="toggleDarkMode()" 
-        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition-all duration-300 font-medium">
-        🌙 Dark
-      </button>
     </div>
-  </header>
+  </nav>
 
   <!-- Hero Section -->
-  <section class="max-w-4xl mx-auto p-6 mt-8 animate-on-scroll">
-    <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200 dark:border-purple-700">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100 text-center">
-          Capture Your Moments
-        </h2>
-        <div class="w-16 h-1 bg-blue-500 mx-auto rounded-full mb-6"></div>
+  <section id="home" class="pt-24 pb-16 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center animate-fade-in">
+        <h1 class="font-display font-light text-5xl md:text-7xl lg:text-8xl mb-6 tracking-tight">
+          Sakhile Zondo
+        </h1>
+        <p class="text-xl md:text-2xl font-light text-gray-600 dark:text-gray-400 mb-8">
+          Photography
+        </p>
+        <div class="w-16 h-px bg-gray-900 dark:bg-gray-100 mx-auto mb-12"></div>
+        <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Capturing moments that tell stories. Professional photographer specializing in sports, portraits, and lifestyle photography with over 2 years of experience.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Image -->
+  <section class="px-6 mb-20">
+    <div class="max-w-6xl mx-auto animate-on-scroll">
+      <div class="aspect-[16/10] bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden cursor-pointer group" onclick="openModal(0)">
+        <img 
+          src="./images/IMG_0843.JPG" 
+          alt="Featured Photography Work" 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Grid -->
+  <section id="portfolio" class="px-6 mb-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 animate-on-scroll">
+        <h2 class="font-display font-light text-3xl md:text-4xl mb-4">Portfolio</h2>
+        <div class="w-12 h-px bg-gray-900 dark:bg-gray-100 mx-auto"></div>
       </div>
       
-      <div class="grid md:grid-cols-2 gap-8 items-center">
-        <div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Portfolio Item 1 -->
+        <div class="animate-on-scroll cursor-pointer group" onclick="openModal(1)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_9999.JPG" 
+              alt="Basketball Action Shot" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Basketball Action</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Sports Photography</p>
+        </div>
+
+        <!-- Portfolio Item 2 -->
+        <div class="animate-on-scroll cursor-pointer group" onclick="openModal(2)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_0731.JPG" 
+              alt="St John's Spirit" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">St John's Spirit</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Portrait Photography</p>
+        </div>
+
+        <!-- Portfolio Item 3 -->
+        <div class="animate-on-scroll cursor-pointer group" onclick="openModal(3)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_3675.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Team Spirit</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Sports Photography</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-12 animate-on-scroll">
+        <a href="./mywork.html" class="inline-block bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
+          View Full Portfolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="px-6 mb-20">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="animate-on-scroll">
+          <h2 class="font-display font-light text-3xl md:text-4xl mb-6">About Me</h2>
+          <div class="w-12 h-px bg-gray-900 dark:bg-gray-100 mb-8"></div>
           <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            🎨 <strong>Hi! I'm Sakhile</strong> — a passionate photographer who loves turning ordinary moments into extraordinary memories! 
+            Hi! I'm Sakhile, a passionate photographer who loves turning ordinary moments into extraordinary memories.
           </p>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">
-            ⭐ With over 2 years of experience and a creative eye, I'm here to capture your story through my lens. Whether it's portraits, events, or anything in between — let's create something beautiful together!
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+            With over 2 years of experience and a creative eye, I specialize in capturing authentic stories through my lens. Whether it's the intensity of sports, the intimacy of portraits, or the energy of events, I'm here to create something beautiful with you.
           </p>
-          
-          <a href="./mywork.html" class="block">
-            <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-xl text-center transform hover:scale-105 transition-all duration-300">
-              <div class="text-3xl mb-2">🎉</div>
-              <div class="font-semibold text-blue-800 dark:text-blue-200">My Work</div>
-            </div>
-          </a>
+          <div class="flex items-center space-x-6">
+            <a href="mailto:shotsbyzondo@gmail.com" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              shotsbyzondo@gmail.com
+            </a>
+            <a href="https://www.instagram.com/shotsbyzondo" target="_blank" class="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              @shotsbyzondo
+            </a>
+          </div>
         </div>
         
-        <div class="relative">
-          <div class="w-64 h-64 bg-blue-500 rounded-full flex items-center justify-center text-6xl text-white shadow-lg mx-auto">
-            📷
+        <div class="animate-on-scroll">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden">
+            <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+              <span class="text-6xl">📸</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Booking Form Section -->
-  <main class="max-w-2xl mx-auto p-6 mt-8 animate-on-scroll">
-    <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200 dark:border-purple-700">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100 text-center">
-          Book Your Session
-        </h2>
-        <p class="text-gray-700 dark:text-gray-300 text-center">Fill out this form and I'll be in touch within 24 hours!</p>
-        <div class="w-12 h-1 bg-blue-500 mx-auto rounded-full mt-4 mb-6"></div>
+  <!-- Contact Section -->
+  <section id="contact" class="px-6 mb-20">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12 animate-on-scroll">
+        <h2 class="font-display font-light text-3xl md:text-4xl mb-4">Get In Touch</h2>
+        <div class="w-12 h-px bg-gray-900 dark:bg-gray-100 mx-auto mb-6"></div>
+        <p class="text-gray-600 dark:text-gray-400">
+          Ready to create something beautiful together? Let's discuss your vision.
+        </p>
       </div>
-      
-      <form id="bookingForm" class="space-y-6"  action="https://formspree.io/f/mpwlqgdb" method="POST" target="_blank">
-        <div class="group">
-          <label for="name" class="block font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Name:
-          </label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200" 
-            placeholder="Your name"
-            required />
-        </div>
 
-        <div class="group">
-          <label for="email" class="block font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Email:
-          </label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200" 
-            placeholder="your.email@example.com"
-            required />
+      <form id="bookingForm" action="https://formspree.io/f/mpwlqgdb" method="POST" target="_blank" class="space-y-6 animate-on-scroll" onsubmit="handleFormSubmit()">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <input 
+              type="text" 
+              name="name" 
+              placeholder="Your Name"
+              class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              required 
+            />
+          </div>
+          <div>
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email Address"
+              class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              required 
+            />
+          </div>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="group">
-            <label for="date" class="block font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Preferred Date:
-            </label>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
             <input 
               type="date" 
-              id="date" 
               name="date" 
-              class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200" 
-              required />
+              class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              required 
+            />
           </div>
-
-          <div class="group">
-            <label for="time" class="block font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Preferred Time:
-            </label>
+          <div>
             <input 
               type="time" 
-              id="time" 
               name="time" 
-              class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200" 
-              required />
+              class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              required 
+            />
           </div>
         </div>
 
-        <div class="group">
-          <label for="message" class="block font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Tell me about your vision:
-          </label>
+        <div>
           <textarea 
-            id="message" 
             name="vision" 
-            rows="5" 
-            class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200 resize-none" 
-            placeholder="Describe your dream photoshoot! Any special requests, themes, or ideas you have in mind?"></textarea>
+            rows="6" 
+            placeholder="Tell me about your vision and what you'd like to capture..."
+            class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors resize-none"
+            required
+          ></textarea>
         </div>
 
-        <button 
-          type="submit" 
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-medium shadow transition-all duration-300">
-          Submit Booking Request
-        </button>
+        <div class="text-center">
+          <button 
+            type="submit" 
+            class="bg-black dark:bg-white text-white dark:text-black px-12 py-4 rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">
+            Send Message
+          </button>
+        </div>
       </form>
-      
-      <div class="text-center mt-6">
-        <p class="text-gray-600 dark:text-gray-400 text-sm text-center">
-          I typically respond within 24 hours.
-        </p>
-      </div>
-    </div>
-  </main>
-
-  <!-- Contact Info -->
-  <section class="max-w-4xl mx-auto p-6 mt-8 animate-on-scroll">
-    <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 backdrop-blur-sm rounded-3xl p-8 border border-purple-200 dark:border-purple-700">
-      <div class="text-center">
-        <h3 class="text-2xl font-bold mb-4 text-purple-800 dark:text-purple-200">Let's Connect! 🤝</h3>
-        <p class="text-gray-700 dark:text-gray-300 mb-6">
-          Have questions? Want to see more of my work? Don't hesitate to reach out!
-        </p>
-        <div class="flex justify-center space-x-6">
-          <!-- Email -->
-          <a href="mailto:shotsbyzondo@gmail.com" target="_blank" rel="noopener noreferrer" class="no-underline">
-            <div class="bg-white/50 dark:bg-gray-800/50 p-4 rounded-xl transform hover:scale-105 transition-all duration-300 text-center cursor-pointer">
-              <div class="text-2xl mb-2">📧</div>
-              <div class="text-sm font-medium">Email</div>
-            </div>
-          </a>
-        
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/shotsbyzondo" target="_blank" rel="noopener noreferrer" class="no-underline">
-            <div class="bg-white/50 dark:bg-gray-800/50 p-4 rounded-xl transform hover:scale-105 transition-all duration-300 text-center cursor-pointer">
-              <div class="text-2xl mb-2">📸</div>
-              <div class="text-sm font-medium">Instagram</div>
-            </div>
-          </a>
-        </div>
-        
-        </div>
-      </div>
     </div>
   </section>
 
-  <footer class="text-center mt-12 p-8">
-    <div class="max-w-md mx-auto">
-      <div class="bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm rounded-full p-6 border border-purple-200 dark:border-purple-700">
-        <p class="text-gray-600 dark:text-gray-400 text-sm">
-          ✨ &copy; 2025 Sakhile Zondo Photography ✨<br>
-          <span class="text-xs">Making memories, one click at a time 📸</span>
+  <!-- Footer -->
+  <footer class="border-t border-gray-100 dark:border-gray-800 px-6 py-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center">
+        <div class="flex items-center justify-center space-x-3 mb-4">
+          <div class="w-8 h-8 bg-black dark:bg-white rounded-full flex items-center justify-center">
+            <span class="text-white dark:text-black text-sm font-bold">SZ</span>
+          </div>
+          <span class="font-display font-medium">Sakhile Zondo Photography</span>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          © 2025 Sakhile Zondo Photography. Making memories, one click at a time.
         </p>
       </div>
     </div>
   </footer>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-95 z-50 hidden items-center justify-center p-4">
+    <div class="relative max-w-5xl w-full">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      
+      <button onclick="navigateModal(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      
+      <button onclick="navigateModal(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+      
+      <img id="modalImage" class="w-full h-auto max-h-screen object-contain rounded-lg" />
+      
+      <div class="absolute bottom-4 left-4 right-4 text-center">
+        <h3 id="modalTitle" class="text-white text-xl font-medium bg-black bg-opacity-50 px-6 py-3 rounded-lg inline-block"></h3>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
