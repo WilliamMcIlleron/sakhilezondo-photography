@@ -264,36 +264,37 @@ window.addEventListener('load', () => {
   </section>
 
   <!-- Filter Navigation -->
-  <section class="px-6 mb-16">
+  <section class="px-4 sm:px-6 mb-16">
     <div class="max-w-4xl mx-auto animate-on-scroll">
-      <div class="flex justify-center items-center space-x-8 text-sm font-medium">
+      <div class="flex flex-wrap justify-center items-center gap-4 text-sm font-medium">
         <button 
           data-category="all" 
           onclick="filterGallery('all')"
-          class="filter-btn bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-full transition-colors">
+          class="filter-btn bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-full transition-colors">
           All Work
         </button>
         <button 
           data-category="sports" 
           onclick="filterGallery('sports')"
-          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-6 py-2 rounded-full transition-colors">
+          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-5 py-2 rounded-full transition-colors">
           Sports
         </button>
         <button 
           data-category="portraits" 
           onclick="filterGallery('portraits')"
-          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-6 py-2 rounded-full transition-colors">
+          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-5 py-2 rounded-full transition-colors">
           Portraits
         </button>
         <button 
           data-category="events" 
           onclick="filterGallery('events')"
-          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-6 py-2 rounded-full transition-colors">
+          class="filter-btn text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white px-5 py-2 rounded-full transition-colors">
           Events
         </button>
       </div>
     </div>
   </section>
+  
 
   <!-- Portfolio Grid -->
   <section class="px-6 mb-20">
