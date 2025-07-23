@@ -120,8 +120,18 @@ window.addEventListener('load', () => {
       { src: './images/IMG_0843.JPG', title: 'St John\'s 1st XV', category: 'sports' },
       { src: './images/IMG_9999.JPG', title: 'Basketball Action Shot', category: 'sports' },
       { src: './images/IMG_0731.JPG', title: 'St John\'s Spirit', category: 'sports' },
-      { src: './images/IMG_3675.JPG', title: 'Michealhouse 2025 16A', category: 'sports' }
-    ];
+      { src: './images/IMG_3675.JPG', title: 'Michealhouse 2025 16A', category: 'sports' },
+      { src: './images/IMG_0227.jpg', title: 'Vocal Performance', category: 'events' },
+      { src: './images/IMG_7143.JPG', title: 'Hockey Player', category: 'sports' },
+      { src: './images/IMG_2067.JPG', title: 'Eagles Basketball Free Throw', category: 'sports' },
+      { src: './images/IMG_2538.JPG', title: 'Rugby Shot', category: 'sports' },
+      { src: './images/IMG_3929.JPG', title: 'St John\'s Basketball Tense Moment', category: 'sports' },
+      { src: './images/IMG_3946.JPG', title: 'Nasty C Performs At St John\'s', category: 'events' },
+      { src: './images/IMG_3949.JPG', title: 'Nasty C Performs At St John\'s', category: 'events' },
+      { src: './images/IMG_3954.JPG', title: 'Nasty C Performs At St John\'s', category: 'events' },
+      { src: './images/IMG_4038.JPG', title: 'Awards Given At St John\'s Basketball Tournament', category: 'events'},
+      { src: './images/IMG_7128.JPG', title: 'Hockey Shot', category: 'sports'}
+];
 
     function openModal(index) {
       currentImageIndex = index;
@@ -360,6 +370,138 @@ window.addEventListener('load', () => {
           <h3 class="font-medium text-lg mb-1">Michealhouse 2025 16A</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">The Michealhouse under 16A basketball team at St John's tournament</p>
         </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(4)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_0227.jpg" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Vocal Performance</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A photograph of a singer</p>
+        </div>
+        
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(5)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_7143.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Hockey Player</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A photo of a player in a hockey game</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(6)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_2067.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Eagles Basketball Free Throw</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A player for the Eagles Basketball Club takes a free throw</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(7)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_2538.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Rugby Shot</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A photograph of a player preparing for a free kick in a rugby game</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(8)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_3929.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">St John's Basketball Tense Moment</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A player takes a shot in a basketball game</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="sports" 
+             onclick="openModal(9)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_3946.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Nasty C Performs At St John's</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Nasty C, a South African rapper performs at St John's College</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="events" 
+             onclick="openModal(10)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_3949.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Nasty C Performs At St John's</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Nasty C, a South African rapper performs at St John's College</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="events" 
+             onclick="openModal(11)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_3954.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Nasty C Performs At St John's</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Nasty C, a South African rapper performs at St John's College</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="events" 
+             onclick="openModal(12)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_4038.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Awards Given At St John's Basketball Tournament</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Three players who performed exceptionally in the St John's Basketball Tournament</p>
+        </div>
+        <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
+             data-category="events sports" 
+             onclick="openModal(13)">
+          <div class="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img 
+              src="./images/IMG_7128.JPG" 
+              alt="Michealhouse 2025 16A" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <h3 class="font-medium text-lg mb-1">Hockey Shot</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">A photo of a player in a club hockey game</p>
+        </div>
+        
 
         <!-- Placeholder items for other categories -->
         <div class="gallery-item animate-on-scroll cursor-pointer group transition-all duration-300" 
