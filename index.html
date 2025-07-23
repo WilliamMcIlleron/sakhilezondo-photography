@@ -361,7 +361,7 @@ window.addEventListener('load', () => {
       </div>
 
       <form id="bookingForm" action="https://formspree.io/f/mpwlqgdb" method="POST" target="_blank" class="space-y-6 animate-on-scroll" onsubmit="handleFormSubmit()">
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid md:grid-cols-3 gap-6">
           <div>
             <input 
               type="text" 
@@ -377,6 +377,17 @@ window.addEventListener('load', () => {
               name="email" 
               placeholder="Email Address"
               class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              required 
+            />
+          </div>
+          <div>
+            <input 
+              type="tel" 
+              name="number" 
+              placeholder="Phone Number"
+              class="w-full p-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg focus:border-black dark:focus:border-white focus:outline-none transition-colors"
+              pattern="^(?:0\d{9}|\+27\s?\d{2}\s?\d{3}\s?\d{4})$"
+              inputmode="numeric"
               required 
             />
           </div>
